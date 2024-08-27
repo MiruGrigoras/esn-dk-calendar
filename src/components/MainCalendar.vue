@@ -10,6 +10,7 @@
         {{ formatDate(event.end.dateTime || event.end.date) }}
       </li>
     </ul>
+    <FullCalendar :options="calendarOptions" />
   </div>
 </template>
 
@@ -20,10 +21,32 @@ import {
   getCalendarEvents,
 } from "../services/googleCalendar";
 
+import FullCalendar from "@fullcalendar/vue3";
+
+import dayGridPlugin from "@fullcalendar/daygrid";
+import googleCalendarPlugin from "@fullcalendar/google-calendar";
+import timeGridPlugin from "@fullcalendar/timegrid";
+
 export default {
+  components: {
+    FullCalendar,
+  },
   data() {
     return {
       events: [],
+      calendarOptions: {
+        plugins: [dayGridPlugin, googleCalendarPlugin, timeGridPlugin],
+        initialView: "dayGridMonth",
+        events: {
+          googleCalendarId: "miruna.grig@gmail.com",
+          googleCalendarApiKey: "AIzaSyC6qB9xs-OgpYHy5L_CD9kiFK0OyMHj5eo",
+        },
+        headerToolbar: {
+          left: "prev,next today",
+          center: "title",
+          right: "dayGridMonth,timeGridWeek,timeGridDay",
+        },
+      },
     };
   },
   methods: {
